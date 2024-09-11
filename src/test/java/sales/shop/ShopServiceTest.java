@@ -58,6 +58,27 @@ class ShopServiceTest {
     }
 
     @Test
+    void placeOrderTest_notAvailableQuantity() {
+        ShopService shopService = new ShopService(orderRepository);
+        shopService.setCustomerEmail(CUSTOMER_EMAIL);
+        shopService.setCustomerFirstName(CUSTOMER_FIRST_NAME);
+        shopService.setCustomerLastName(CUSTOMER_LAST_NAME);
+        shopService.addProduct(mouse.getId(), 50);
+
+        ShopService shopService2 = new ShopService(orderRepository);
+        shopService2.setCustomerEmail(CUSTOMER_EMAIL);
+        shopService2.setCustomerFirstName(CUSTOMER_FIRST_NAME);
+        shopService2.setCustomerLastName(CUSTOMER_LAST_NAME);
+        shopService2.addProduct(mouse.getId(), 1);
+
+        shopService.placeOrder();
+
+        assertThatThrownBy(() -> shopService2.placeOrder())
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("The requested quantity for product with id " + mouse.getId() + " is not available.");
+    }
+
+    @Test
     void placeOrderTest_emailNotSet() {
         ShopService shopService = new ShopService(orderRepository);
         shopService.setCustomerFirstName(CUSTOMER_FIRST_NAME);

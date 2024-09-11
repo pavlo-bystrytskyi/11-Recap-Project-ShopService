@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import sales.products.Product;
+import sales.products.ProductRepository;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +24,8 @@ class OrderRepositoryTest {
     void initEach() {
         Product mouse = Product.create("Mouse", 8, 50, true);
         Product usbStick = Product.create("USB stick", 15, 50, true);
+        ProductRepository.save(mouse);
+        ProductRepository.save(usbStick);
         OrderItem mouseOrderItem = OrderItem.create(mouse.getId(), mouse.getPrice(), 1);
         OrderItem usbStickOrderItem = OrderItem.create(usbStick.getId(), usbStick.getPrice(), 2);
         orderItems.clear();

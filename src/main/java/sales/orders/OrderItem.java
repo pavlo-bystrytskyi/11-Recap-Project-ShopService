@@ -17,7 +17,14 @@ public class OrderItem {
         this.totalPrice = totalPrice;
     }
 
-    public static OrderItem create(int productId,  double productPrice, int quantity) {
+    public static OrderItem create(int productId, double productPrice, int quantity) {
+        Product product = ProductRepository.get(productId);
+        if (!product.isAvailable()) {
+            throw new IllegalArgumentException("The product with id " + productId + " is not available.");
+        }
+        if (quantity > product.getQuantity()) {
+            throw new IllegalArgumentException("The requested quantity for product with id " + productId + " is not available.");
+        }
         int id = ++incrementId;
         double totalPrice = productPrice * quantity;
         return new OrderItem(id, productId, quantity, totalPrice);

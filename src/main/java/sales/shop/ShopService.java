@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ShopService {
-    private Map<Integer, OrderItem> orderItems = new HashMap<>();
+    private Map<Integer, OrderItem> orderItems;
     private final OrderRepositoryInterface orderRepository;
     private String customerFirstName;
     private String customerLastName;
@@ -18,6 +18,7 @@ public class ShopService {
 
     public ShopService(OrderRepositoryInterface orderRepository) {
         this.orderRepository = orderRepository;
+        this.orderItems = new HashMap<>();
     }
 
     public void setCustomerFirstName(String customerFirstName) {
