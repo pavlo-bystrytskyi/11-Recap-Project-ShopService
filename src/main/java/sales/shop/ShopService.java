@@ -10,8 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ShopService {
-    private final Map<Integer, OrderItem> orderItems = new HashMap<>();
-    private OrderRepositoryInterface orderRepository;
+    private Map<Integer, OrderItem> orderItems = new HashMap<>();
+    private final OrderRepositoryInterface orderRepository;
     private String customerFirstName;
     private String customerLastName;
     private String customerEmail;
@@ -39,7 +39,7 @@ public class ShopService {
     }
 
     public void clear() {
-        orderItems.clear();
+        this.orderItems = new HashMap<>();
         this.customerFirstName = null;
         this.customerLastName = null;
         this.customerEmail = null;
@@ -47,20 +47,21 @@ public class ShopService {
 
     public Order placeOrder() {
         if (this.customerFirstName == null) {
-            throw new IllegalStateException("You must provide a customer first name");
+            throw new IllegalStateException("Customer first name not set");
         }
         if (this.customerLastName == null) {
-            throw new IllegalStateException("You must provide a customer last name");
+            throw new IllegalStateException("Customer last name not set");
         }
         if (this.customerEmail == null) {
-            throw new IllegalStateException("You must provide a customer email");
+            throw new IllegalStateException("Customer email not set");
         }
         if (this.orderItems.size() == 0) {
-            throw new IllegalStateException("You must provide at least one order item");
+            throw new IllegalStateException("Order products not set");
         }
         Order order = Order.create(customerFirstName, customerLastName, customerEmail, orderItems);
         this.orderRepository.save(order);
         this.clear();
+
         return order;
     }
 }

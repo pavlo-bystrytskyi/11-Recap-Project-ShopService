@@ -9,6 +9,7 @@ public class Order {
     private final String customerLastName;
     private final String customerEmail;
     private final Map<Integer, OrderItem> orderItems;
+    private final double totalPrice;
 
     private Order(int id, String customerFirstName, String customerLastName, String customerEmail, Map<Integer, OrderItem> orderItems) {
         this.id = id;
@@ -16,6 +17,7 @@ public class Order {
         this.customerLastName = customerLastName;
         this.customerEmail = customerEmail;
         this.orderItems = orderItems;
+        this.totalPrice = orderItems.values().stream().map(OrderItem::getTotalPrice).reduce(0.0, Double::sum);
     }
 
     public static Order create(String customerFirstName, String customerLastName, String customerEmail, Map<Integer, OrderItem> orderItems) {
@@ -41,5 +43,9 @@ public class Order {
 
     public Map<Integer, OrderItem> getOrderItems() {
         return orderItems;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
     }
 }
