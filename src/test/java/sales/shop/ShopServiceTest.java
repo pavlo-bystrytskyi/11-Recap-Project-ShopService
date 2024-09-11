@@ -63,13 +63,13 @@ class ShopServiceTest {
         shopService.setCustomerEmail(CUSTOMER_EMAIL);
         shopService.setCustomerFirstName(CUSTOMER_FIRST_NAME);
         shopService.setCustomerLastName(CUSTOMER_LAST_NAME);
-        shopService.addProduct(mouse.getId(), 50);
+        shopService.addProduct(mouse.getId(), 25);
 
         ShopService shopService2 = new ShopService(orderRepository);
         shopService2.setCustomerEmail(CUSTOMER_EMAIL);
         shopService2.setCustomerFirstName(CUSTOMER_FIRST_NAME);
         shopService2.setCustomerLastName(CUSTOMER_LAST_NAME);
-        shopService2.addProduct(mouse.getId(), 1);
+        shopService2.addProduct(mouse.getId(), 26);
 
         shopService.placeOrder();
 
